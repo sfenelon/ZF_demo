@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Country Information</div>
+
+<?php if ($this->countryModel == null ) {?>
+
+   <p>Unable to find a country with the code <?php echo $this->code ?></p>
+   
+<?php } else { ?>
+
+<p><strong>Name:</strong> 
+    <?php echo $this->countryModel->getName() ?>
+</p>
+<p><strong>Capital:</strong> 
+    <?php  echo (($this->countryModel->getCapitalcity() !== null) ? $this->countryModel->getCapitalcity()->getName() : 'unknown') ?>
+</p>
+<p><strong>Languages:</strong>
+    <?php echo join(', ', $this->countryModel->getLanguageList() ) ?>
+</p>
+<p><strong>Cities:</strong>
+    <?php echo join(', ', $this->countryModel->getCityList() ) ?>
+</p>
+
+<?php }?>
+
+</div>
+<?php  /* 
+<pre>
+countryModel: 
+<?php var_dump($this->countryModel); ?>
+</pre>
+*/?>

@@ -1,0 +1,68 @@
+<h1>List of Countries in Database</h1>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Number of countries in the database: <?php echo count($this->countries); ?> </div>
+
+
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-modal-title="Delete XXX?" >
+  test modal
+</button>
+
+
+<table id="data" class="table">
+<tr>
+  <th>Country</th>
+  <th>
+<?php if ($this->isAuthenticated()) { ?>
+  <form action="/index/addcountry"><button class="btn-primary" >Add Another Country</button></form>
+<?php } else { ?>   
+  &nbsp;
+<?php } ?> 
+  </th>
+</tr>
+
+<?php foreach ($this->countries as $c): ?>
+
+    <tr>
+       <td align="left"><?php echo $this->escape($c->getName()) ?></td>
+       <td>
+         <form action="/index/view/<?php echo $c->getCode()?>"><button class="btn-primary" >View Details</button>
+<?php if ($this->isAuthenticated()) { ?>
+         &nbsp;
+         <button formmethod='get' formaction="/index/editcountry/<?php echo $c->getCode()?>" class="btn-primary" >Edit</button>
+         &nbsp;
+         <button formmethod='post' 
+         		 name="deletecountry"
+                 data-confirm="Are you sure you want to delete?"
+                 formaction="/index/delcountry/<?php echo $c->getCode()?>" 
+                 class="btn-primary" >Delete</button>
+<?php } ?> 
+         </form>
+       </td>
+    </tr>
+    
+<?php endforeach ?>
+
+</table>
+    
+</div>
+
+
+
+<div id="myModal"  class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Confirm Delete</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete that country from the database?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Yes, remove it</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
